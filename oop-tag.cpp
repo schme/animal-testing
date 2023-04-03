@@ -1,5 +1,8 @@
 #include <chrono>
 #include <random>
+#include <typeinfo>
+#include <typeindex>
+#include <algorithm>
 
 #define USE_FORI 0
 
@@ -110,8 +113,13 @@ int main(int argc, char *argv[])
 	unsigned count_tags = 0;
 	printf("Running with %d samples and %d iterations\n", samples, max_iterations);
 
+
 	// run the test
 	auto start_time = std::chrono::high_resolution_clock::now();
+	// Sorting by type is a huge performance boost (at least excluding the sort itself)
+	//std::sort(animals.begin(), animals.end(), [](Animal *l, Animal *r) {
+			//return std::type_index(typeid(*l)) < std::type_index(typeid(*r));
+		//});
 	for (int i=0; i < max_iterations; ++i) {
 #if USE_FORI
 		for (int i=0; i < animals.size(); ++i) {
